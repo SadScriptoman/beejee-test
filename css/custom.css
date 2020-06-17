@@ -1,0 +1,68 @@
+body{
+    background-color: #f5f5f5;
+}
+
+/*INDEX*/
+
+.card-subtitle{
+    font-size: small;
+}
+
+.todo__tools{
+    display: inline-block;
+    text-decoration: none !important;
+    margin-right: 1rem;
+}
+
+.todo__state{
+    display: none;
+    margin-right: 1rem;
+}
+
+.todo{
+    position: relative;
+}
+
+.todo--done{
+    opacity: 0.5;
+}
+
+.todo--edited .todo__state.todo__state--edited{
+    display: inline-block;
+    position: absolute;
+    right: -5px;
+    top: 10px;
+    font-size: small;
+}
+
+.todo__state.todo__state--not-done{
+    display: inline-block;
+}
+
+.todo--done .todo__state.todo__state--not-done{
+    display: none;
+}
+
+.todo--done .todo__state.todo__state--done{
+    display: inline-block;
+}
+
+/*LOGIN*/
+
+.sign-in{
+
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+
+    height: calc(100vh - 40px);
+
+}
+
+
+.sign-in__form{
+    width: 100%;
+    max-width: 330px;
+
+    margin: auto;
+}
