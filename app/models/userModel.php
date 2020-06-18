@@ -25,7 +25,7 @@ class userModel extends Model{
         $db = $this->getDB();
         if($db){
             if ($result = $this->checkUser($login, $password)){
-                $_COOKIE['sessionID'] = session_id();
+                setcookie('sessionID', session_id(), time()+86400*7); //сохраняем id сессии на 7 дней
                 $_SESSION['user'] = [
                     'login' => $result['login'],
                 ];
@@ -41,6 +41,7 @@ class userModel extends Model{
         if (isset($_COOKIE['sessionID'])) {
             session_id($_COOKIE['sessionID']);
             $_COOKIE['sessionID'] = NULL;
+            setcookie('sessionID', NULL, time()-86400*7, '/'); //сохраняем id сессии на 7 дней
         }
         session_destroy();
         return true;

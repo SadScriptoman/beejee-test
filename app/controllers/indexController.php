@@ -21,7 +21,11 @@ class indexController extends Controller
 
 		if($_SERVER['REQUEST_METHOD'] === 'POST'){ //поиск и добавление
 			if(isset($_POST['search'])){
-				$_SESSION['search'] = $_POST['search']; //сохраняем поиск
+				if($_POST['search']){
+					setcookie('search', $_POST['search'], time()+3600); //сохраняем поиск
+				}else{
+					setcookie('search', NULL, time()-3600, '/'); //удаляем поиск
+				}
 				header('Location: index?page='.$data['page']);
 			}
 			
@@ -66,8 +70,8 @@ class indexController extends Controller
 			}
 		}
 
-		if($_SESSION['search']) {
-			$data['search'] = $_SESSION['search'];
+		if(isset($_COOKIE['search'])) {
+			$data['search'] = $_COOKIE['search'];
 		}
 
 		if($data['search']){
@@ -76,8 +80,8 @@ class indexController extends Controller
 			$count = $this->model->getCount(NULL, 0, 0); //если нет, то общее кол-во записей
 		}
 
-		$data['pages'] = (int) $count[0]['COUNT(id)'];
-		$data['pages'] = ceil($data['pages']/$data['limit']); //общее количество страниц
+		$data['count'] = (int) $count[0]['COUNT(id)'];
+		$data['pages'] = ceil($data['count']/$data['limit']); //общее количество страниц
 
 		$data['items'] = $this->model->getData($data['search'], $data['page'], $data['limit']);
 		

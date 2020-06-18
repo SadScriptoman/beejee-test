@@ -72,15 +72,39 @@
             </div>
         <?endforeach;?>
         <?if (($data['pages'] > 1 && $data['search'] == '') || ($data['search'] && $data['pages'] > 1)):?>
-            <nav aria-label="Page navigation example" class='d-flex justify-content-center'>
+            <nav aria-label="Page navigation" class='d-flex justify-content-center'>
                 <ul class="pagination">
-                    <li class="page-item <?if(($data['page'] - 1) < 1):?>disabled<?endif;?>"><a class="page-link" href="index?page=<?=$data['page']-1?>">Пред</a></li>
-                    <?for ($page = 1; $page <= $data['pages']; $page++):?>
+                    <?
+                    $pageStart = 1;
+                    $pageLast = 3;
+                    $showArrows = false;
+                    if($data['pages']>3){
+                        $showArrows = true;
+                        $showRightDots = true;
+                        if($data['page']>1){
+                            if(($data['page']+1) <= $data['pages']){
+                                $pageStart = $data['page']-1;
+                                $pageLast = $data['page']+1;
+                            }else{
+                                $pageStart = $data['page']-2;
+                                $pageLast = $data['page'];
+                            }
+                        }
+                    }?>
+                    <?if($showArrows):?>
+                        <li class="page-item <?if(($data['page']) == 1):?>disabled<?endif;?>"><a class="page-link" href="index?page=1">«</a></li>
+                    <?endif;?>
+                    <?for ($page = $pageStart; $page <= $pageLast; $page++):?>
                         <li class="page-item <?if($data['page'] == $page):?>active<?endif;?>"><a class="page-link" href="index?page=<?=$page?>"><?=$page?></a></li>
                     <?endfor;?>
-                    <li class="page-item <?if(($data['page'] + 1) > $data['pages']):?>disabled<?endif;?>"><a class="page-link" href="index?page=<?=$data['page']+1?>">След</a></li>
+                    <?if($showArrows):?>
+                        <li class="page-item <?if($data['page'] == $data['pages']):?>disabled<?endif;?>"><a class="page-link" href="index?page=<?=$data['pages']?>">»</a></li>
+                    <?endif;?>
                 </ul>
             </nav>
+            <p class='text-center text-muted'>
+                всего <?=$data['count']?> эл. на <?=$data['pages']?> стр.
+            </p>
         <?endif;
     elseif ($data['search']):?>
         <h3 class='text-center'>
