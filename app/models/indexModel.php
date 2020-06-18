@@ -99,7 +99,7 @@ class indexModel extends Model{
         $offset = ($page-1) * $limit; 
         if($db){
             if ($search){
-                $searchUnscaped = preg_replace("/[()\-\+\=]/", '', $search); 
+                $searchUnscaped = preg_replace("/[()\-\+\=*]/", '', htmlspecialchars($search)); 
                 $searchQuery = '+*'.preg_replace("/\s+/", '*+*', $searchUnscaped)."*";
 
                 if($count){
