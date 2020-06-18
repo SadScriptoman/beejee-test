@@ -13,7 +13,21 @@ class Application {
     private $controller;
     private $action;
 
+    private $user;
+    private $logged = false;
+
     function __construct(){
+
+        if (isset($_COOKIE['sessionID'])) { //если в куках есть id сессии
+            session_id($_COOKIE['sessionID']);
+        }
+
+        session_start();
+        
+        if (isset($_SESSION['user'])){//если залогинен
+            $this->logged = TRUE;
+            $this->user = $_SESSION['user'];
+        }
 		
 		$routes = explode('/', $_SERVER['REQUEST_URI']);
 
@@ -51,7 +65,7 @@ class Application {
 			Application::Error404();
 		}
 		
-        $this->controller = new $this->controllerName;
+        $this->controller = new $this->controllerName($this);
 		
 		if(method_exists($this->controller, $this->actionName))
 		{
@@ -71,6 +85,14 @@ class Application {
 
     public function GetAction(){
         return $this->action;
+    }
+
+    public function GetUser(){
+        return $this->user;
+    }
+
+    public function logged(){
+        return $this->logged;
     }
 	
 	static function Error404()

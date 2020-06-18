@@ -1,4 +1,8 @@
-<?$buffer = new Buffer();?>
+<?$buffer = new Buffer();
+$application = $this->application;
+$user = $application->getUser();
+$logged = $application->logged();
+?>
 <!doctype html>
 <html lang="ru">
   <head>
@@ -13,8 +17,12 @@
   <body>
     <div class="nav-scroller bg-white shadow-sm">
       <nav class="nav nav-underline">
-        <a class="nav-link active" href="/">Список</a>
-        <a class="nav-link" href="login">Войти</a>
+        <a class="nav-link" href="/">Задачи</a>
+        <?if(!$logged):?>
+          <a class="nav-link" href="user">Войти</a>
+        <?else:?>
+          <a class="nav-link" href="user?logout=1">Выйти</a>
+        <?endif;?>
       </nav>
     </div>
 

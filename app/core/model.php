@@ -11,8 +11,11 @@
         ];
         
         private $db;
+        public $application;
         
-        function __construct() {
+        function __construct($application) {
+
+            $this->application = $application;
 
             try{
                 $this->db = new PDO('mysql:host='.self::connectionInfo['host'].';dbname='.self::connectionInfo['dbName'].';charset='.self::connectionInfo['charset'], self::connectionInfo['userName'], self::connectionInfo['password'], [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
