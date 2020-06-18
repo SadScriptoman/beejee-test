@@ -22,7 +22,7 @@ class indexController extends Controller
 		if($_SERVER['REQUEST_METHOD'] === 'POST'){ //поиск и добавление
 			if(isset($_POST['search'])){
 				$_SESSION['search'] = $_POST['search']; //сохраняем поиск
-				$data['search'] = $_SESSION['search'];
+				header('Location: index?page='.$data['page']);
 			}
 			
 			if(isset($_POST['action'])){
@@ -37,9 +37,10 @@ class indexController extends Controller
 							if($_POST['id'] > 0){
 								$item['id'] = (int) $_POST['id'];
 								$this->model->editItem($item);
+								header('Location: index?page='.$data['page']);
 							}else{
 								$this->model->addItem($item);
-								header('Location: index');
+								header('Location: index?page=1');
 							}
 						}
 					break;
@@ -48,6 +49,7 @@ class indexController extends Controller
 							if($_POST['id'] > 0){
 								$id = (int) $_POST['id'];
 								$this->model->deleteItem($id);
+								header('Location: index?page='.$data['page']);
 							}
 						}
 					break;
@@ -56,11 +58,16 @@ class indexController extends Controller
 							if($_POST['id'] > 0){
 								$id = (int) $_POST['id'];
 								$this->model->switchStates($id);
+								header('Location: index?page='.$data['page']);
 							}
 						}
 					break;
 				}
 			}
+		}
+
+		if($_SESSION['search']) {
+			$data['search'] = $_SESSION['search'];
 		}
 
 		if($data['search']){
