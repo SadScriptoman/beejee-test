@@ -5,21 +5,19 @@ class indexModel extends Model{
     public $allowedTags = Array('br', 'strong', 'b', 'i');
 
     public function addItem($array){
-        if($this->application->logged()){
-            $db = $this->getDB();
-            if($db){
-                extract($array);
-                $text = htmlspecialchars(strip_tags($text, $this->allowedTags));
-                $email = htmlspecialchars(strip_tags($email, $this->allowedTags));
-                $name = htmlspecialchars(strip_tags($name, $this->allowedTags));
-                $str = $db->prepare("INSERT INTO todos (name, email, text) VALUES ('$name', '$email', '$text')");
-                if (!$str->execute()){
-                    throw new Exception('indexModel::addItem(): запрос не был выполнен! Возможно, отсутвуют некоторые параметры.');
-                }
-                return true;
-            }else{
-                throw new Exception('indexModel::addItem(): нет базы данных!');
+        $db = $this->getDB();
+        if($db){
+            extract($array);
+            $text = htmlspecialchars(strip_tags($text, $this->allowedTags));
+            $email = htmlspecialchars(strip_tags($email, $this->allowedTags));
+            $name = htmlspecialchars(strip_tags($name, $this->allowedTags));
+            $str = $db->prepare("INSERT INTO todos (name, email, text) VALUES ('$name', '$email', '$text')");
+            if (!$str->execute()){
+                throw new Exception('indexModel::addItem(): запрос не был выполнен! Возможно, отсутвуют некоторые параметры.');
             }
+            return true;
+        }else{
+            throw new Exception('indexModel::addItem(): нет базы данных!');
         }
         return false;
     }
