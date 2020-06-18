@@ -39,6 +39,7 @@ class indexController extends Controller
 								$this->model->editItem($item);
 							}else{
 								$this->model->addItem($item);
+								header('Location: index');
 							}
 						}
 					break;
