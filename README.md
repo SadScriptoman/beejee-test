@@ -16,5 +16,5 @@
 
 ## Скрины
 
-![Imgur](https://imgur.com/tOrFPxV)
-![Imgur](https://imgur.com/YtDMo4r)
+![Imgur](https://i.imgur.com/tOrFPxV.png)
+![Imgur](https://i.imgur.com/YtDMo4r.png)
